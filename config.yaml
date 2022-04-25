@@ -1,0 +1,8 @@
+schema: http
+port: 8089
+ssl_certificate:
+ssl_certificate_key:
+location:
+  - pattern: /
+    proxy_pass:
+    balance_mode: round-robin

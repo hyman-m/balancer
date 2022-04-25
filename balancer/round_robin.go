@@ -1,14 +1,17 @@
+// Copyright 2022 <mzh.scnu@qq.com>. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
 package balancer
 
 import (
-	"errors"
 	"sync"
 )
 
 type RoundRobin struct {
+	sync.Mutex
 	i     uint64
 	hosts []string
-	sync.Mutex
 }
 
 func init() {
@@ -30,23 +33,21 @@ func (r *RoundRobin) Add(host string) {
 	r.hosts = append(r.hosts, host)
 }
 
-func (r *RoundRobin) Remove(host string) bool {
+func (r *RoundRobin) Remove(host string) {
 	r.Lock()
 	defer r.Unlock()
 	for i, h := range r.hosts {
 		if h == host {
 			r.hosts = append(r.hosts[:i], r.hosts[i+1:]...)
-			return true
 		}
 	}
-	return false
 }
 
 func (r *RoundRobin) Balance(_ string) (string, error) {
 	r.Lock()
 	defer r.Unlock()
 	if len(r.hosts) == 0 {
-		return "", errors.New("no host")
+		return "", NoHostError
 	}
 	host := r.hosts[r.i%uint64(len(r.hosts))]
 	r.i++

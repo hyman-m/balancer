@@ -61,6 +61,7 @@ func (h *HTTPProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadGateway)
 		errMsg := fmt.Sprintf("balance error: %s", err.Error())
 		w.Write([]byte(errMsg))
+		return
 	}
 
 	h.lb.Inc(host)
