@@ -1,12 +1,17 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
-
-	"github.com/fatih/color"
 
 	"gopkg.in/yaml.v3"
 )
+
+var ascii = `
+___ _ _  _ _   _ ___  ____ _    ____ _  _ ____ ____ ____ 
+ |  | |\ |  \_/  |__] |__| |    |__| |\ | |    |___ |__/ 
+ |  | | \|   |   |__] |  | |___ |  | | \| |___ |___ |  \                                        
+`
 
 // Config .
 type Config struct {
@@ -40,9 +45,10 @@ func ReadConfig(fileName string) (*Config, error) {
 
 // Print .
 func (c *Config) Print() {
-	color.Yellow("Schema: %s\nPort: %d\nLocation:\n", c.Schema, c.Port)
+	fmt.Printf("%s\n", ascii)
+	fmt.Printf("Schema: %s\nPort: %d\nLocation:\n", c.Schema, c.Port)
 	for _, l := range c.Location {
-		color.Yellow("\tRoute: %s\n\tProxyPass: %s\n\tMode: %s\n",
+		fmt.Printf("\tRoute: %s\n\tProxyPass: %s\n\tMode: %s\n",
 			l.Pattern, l.ProxyPass, l.BalanceMode)
 	}
 }
