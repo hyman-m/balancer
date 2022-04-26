@@ -1,3 +1,7 @@
+// Copyright 2022 <mzh.scnu@qq.com>. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
 package proxy
 
 import (
@@ -19,11 +23,13 @@ var (
 	ReverseProxy = "Balancer-Reverse-Proxy"
 )
 
+// HTTPProxy refers to a reverse proxy in the balancer
 type HTTPProxy struct {
 	urlMap map[string]*httputil.ReverseProxy
 	lb     balancer.Balancer
 }
 
+// NewHTTPProxy create  new reverse proxy with url and balancer algorithm
 func NewHTTPProxy(targetHosts []string, algo balancer.Algorithm) (
 	*HTTPProxy, error) {
 	lb, err := balancer.Build(algo, targetHosts)
@@ -55,6 +61,7 @@ func NewHTTPProxy(targetHosts []string, algo balancer.Algorithm) (
 	}, nil
 }
 
+// ServeHTTP implements a proxy to the http server
 func (h *HTTPProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	host, err := h.lb.Balance(getIP(r.RemoteAddr))
 	if err != nil {

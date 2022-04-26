@@ -8,6 +8,7 @@ import (
 	"sync"
 )
 
+//RoundRobin will select the server in turn from the server to proxy
 type RoundRobin struct {
 	sync.Mutex
 	i     uint64
@@ -18,10 +19,12 @@ func init() {
 	factories["round-robin"] = NewRoundRobin
 }
 
+// NewRoundRobin create new RoundRobin balancer
 func NewRoundRobin(hosts []string) Balancer {
 	return &RoundRobin{i: 0, hosts: hosts}
 }
 
+// Add new host to the balancer
 func (r *RoundRobin) Add(host string) {
 	r.Lock()
 	defer r.Unlock()
@@ -33,6 +36,7 @@ func (r *RoundRobin) Add(host string) {
 	r.hosts = append(r.hosts, host)
 }
 
+// Remove new host from the balancer
 func (r *RoundRobin) Remove(host string) {
 	r.Lock()
 	defer r.Unlock()
@@ -43,6 +47,7 @@ func (r *RoundRobin) Remove(host string) {
 	}
 }
 
+// Balance selects a suitable host according
 func (r *RoundRobin) Balance(_ string) (string, error) {
 	r.Lock()
 	defer r.Unlock()
@@ -54,6 +59,8 @@ func (r *RoundRobin) Balance(_ string) (string, error) {
 	return host, nil
 }
 
+// Inc .
 func (r *RoundRobin) Inc(_ string) {}
 
+// Done .
 func (r *RoundRobin) Done(_ string) {}

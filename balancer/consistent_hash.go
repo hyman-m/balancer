@@ -12,10 +12,12 @@ func init() {
 	factories["consistent-hash"] = NewConsistent
 }
 
+// Consistent refers to consistent hash
 type Consistent struct {
 	ch *consistent.Consistent
 }
 
+// NewConsistent create new Consistent balancer
 func NewConsistent(hosts []string) Balancer {
 	c := &Consistent{consistent.New()}
 	for _, h := range hosts {
@@ -24,14 +26,17 @@ func NewConsistent(hosts []string) Balancer {
 	return c
 }
 
+// Add new host to the balancer
 func (c *Consistent) Add(host string) {
 	c.ch.Add(host)
 }
 
+// Remove new host from the balancer
 func (c *Consistent) Remove(host string) {
 	c.ch.Remove(host)
 }
 
+// Balance selects a suitable host according to the key value
 func (c *Consistent) Balance(key string) (string, error) {
 	if len(c.ch.Hosts()) == 0 {
 		return "", NoHostError
@@ -40,6 +45,8 @@ func (c *Consistent) Balance(key string) (string, error) {
 	return c.ch.Get(key)
 }
 
+// Inc .
 func (c *Consistent) Inc(_ string) {}
 
+// Done .
 func (c *Consistent) Done(_ string) {}

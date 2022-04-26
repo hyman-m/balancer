@@ -14,17 +14,20 @@ func init() {
 	factories["random"] = NewRandom
 }
 
+// Random will randomly select a http server from the server
 type Random struct {
 	sync.Mutex
 	hosts []string
 	rnd   *rand.Rand
 }
 
+// NewRandom create new Random balancer
 func NewRandom(hosts []string) Balancer {
 	return &Random{hosts: hosts,
 		rnd: rand.New(rand.NewSource(time.Now().UnixNano()))}
 }
 
+// Add new host to the balancer
 func (r *Random) Add(host string) {
 	r.Lock()
 	defer r.Unlock()
@@ -36,6 +39,7 @@ func (r *Random) Add(host string) {
 	r.hosts = append(r.hosts, host)
 }
 
+// Remove new host from the balancer
 func (r *Random) Remove(host string) {
 	r.Lock()
 	defer r.Unlock()
@@ -46,6 +50,7 @@ func (r *Random) Remove(host string) {
 	}
 }
 
+// Balance selects a suitable host according
 func (r *Random) Balance(_ string) (string, error) {
 	r.Lock()
 	defer r.Unlock()
@@ -55,6 +60,8 @@ func (r *Random) Balance(_ string) (string, error) {
 	return r.hosts[r.rnd.Intn(len(r.hosts))], nil
 }
 
+// Inc .
 func (r *Random) Inc(_ string) {}
 
+// Done .
 func (r *Random) Done(_ string) {}

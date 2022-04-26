@@ -1,8 +1,20 @@
-schema: http
-port: 8089
+# Copyright 2022 <mzh.scnu@qq.com>. All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+
+# The load balancing algorithms supported by the balancer are:
+# `round-robin` ,`random` ,`p2c`,`consistent-hash`,`bound`,
+# Among these,`p2c` refers to the power of 2 random choice,
+# and `bounded` refers to consistent hash with bounded
+
+schema: http                      # support http and https
+port: 8089                        # port for balancer
 ssl_certificate:
 ssl_certificate_key:
-location:
+location:                         # route matching for reverse proxy
   - pattern: /
-    proxy_pass:
-    balance_mode: round-robin
+    proxy_pass:                   # URL of the reverse proxy
+    - "http://127.0.0.1:1012"
+    - "http://127.0.0.1:1013"
+    balance_mode: round-robin     # load balancing algorithm

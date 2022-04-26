@@ -1,3 +1,7 @@
+// Copyright 2022 <mzh.scnu@qq.com>. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
 package main
 
 import (
@@ -13,27 +17,18 @@ func main() {
 	config, err := ReadConfig("config.yaml")
 	if err != nil {
 		log.Fatalf("read config error: %s", err)
-		return
 	}
 
-	if config.Schema != "http" && config.Schema != "https" {
-		log.Fatalf("schema \"%s\" not supported", config.Schema)
-		return
-	}
-
-	if len(config.Location) == 0 {
-		log.Fatalf("location is null")
-		return
+	err = config.Validation()
+	if err != nil {
+		log.Fatalf("verify config error: %s", err)
 	}
 
 	router := http.NewServeMux()
-
-	// create proxy
 	for _, l := range config.Location {
 		httpProxy, err := proxy.NewHTTPProxy(l.ProxyPass, balancer.Algorithm(l.BalanceMode))
 		if err != nil {
 			log.Fatalf("create proxy error: %s", err)
-			return
 		}
 		router.Handle(l.Pattern, httpProxy)
 	}

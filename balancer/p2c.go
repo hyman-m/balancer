@@ -22,6 +22,7 @@ type host struct {
 	load uint64
 }
 
+// P2C refer to the power of 2 random choice
 type P2C struct {
 	sync.Mutex
 	hosts   []*host
@@ -29,6 +30,7 @@ type P2C struct {
 	loadMap map[string]*host
 }
 
+// NewP2C create new P2C balancer
 func NewP2C(hosts []string) Balancer {
 	p := &P2C{
 		hosts:   []*host{},
@@ -42,6 +44,7 @@ func NewP2C(hosts []string) Balancer {
 	return p
 }
 
+// Add new host to the balancer
 func (p *P2C) Add(hostName string) {
 	p.Lock()
 	defer p.Unlock()
@@ -54,6 +57,7 @@ func (p *P2C) Add(hostName string) {
 	p.loadMap[hostName] = h
 }
 
+// Remove new host from the balancer
 func (p *P2C) Remove(host string) {
 	p.Lock()
 	defer p.Unlock()
@@ -70,6 +74,7 @@ func (p *P2C) Remove(host string) {
 	}
 }
 
+// Balance selects a suitable host according to the key value
 func (p *P2C) Balance(key string) (string, error) {
 	p.Lock()
 	defer p.Unlock()
@@ -99,6 +104,7 @@ func (p *P2C) hash(key string) (string, string) {
 	return n1, n2
 }
 
+// Inc refers to the number of connections to the server `+1`
 func (p *P2C) Inc(host string) {
 	p.Lock()
 	defer p.Unlock()
@@ -111,6 +117,7 @@ func (p *P2C) Inc(host string) {
 	h.load++
 }
 
+// Done refers to the number of connections to the server `-1`
 func (p *P2C) Done(host string) {
 	p.Lock()
 	defer p.Unlock()
