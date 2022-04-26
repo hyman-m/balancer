@@ -26,7 +26,7 @@ Balancer needs to configure the `config.yaml` file, the content is as follows:
 
 
 # The load balancing algorithms supported by the balancer are:
-# `round-robin` ,`random` ,`p2c`,`consistent-hash`,`bound`,
+# `round-robin` ,`random` ,`p2c`,`consistent-hash`,`bounded`,
 # Among these,`p2c` refers to the power of 2 random choice,
 # and `bounded` refers to consistent hash with bounded
 
