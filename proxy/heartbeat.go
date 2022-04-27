@@ -24,8 +24,8 @@ func (h *HTTPProxy) ReadAlive(url string) bool {
 
 // SetAlive sets the alive status to the site
 func (h *HTTPProxy) SetAlive(url string, alive bool) {
-	h.RLock()
-	defer h.RUnlock()
+	h.Lock()
+	defer h.Unlock()
 	h.alive[url] = alive
 }
 
