@@ -30,6 +30,7 @@ func main() {
 		if err != nil {
 			log.Fatalf("create proxy error: %s", err)
 		}
+		httpProxy.HeartBeat()
 		router.Handle(l.Pattern, httpProxy)
 	}
 

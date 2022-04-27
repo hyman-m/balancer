@@ -6,13 +6,12 @@ package proxy
 
 import (
 	"fmt"
+	"github.com/zehuamama/tinybalancer/balancer"
 	"net"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
 	"sync"
-
-	"github.com/zehuamama/tinybalancer/balancer"
 )
 
 const (
@@ -26,21 +25,20 @@ var (
 
 // HTTPProxy refers to a reverse proxy in the balancer
 type HTTPProxy struct {
-	// protect the balancer to prevent adding or deleting hosts during the balance process
-	sync.RWMutex
 	urlMap map[string]*httputil.ReverseProxy
 	lb     balancer.Balancer
+
+	sync.RWMutex // protect alive
+	alive        map[string]bool
 }
 
 // NewHTTPProxy create  new reverse proxy with url and balancer algorithm
 func NewHTTPProxy(targetHosts []string, algo balancer.Algorithm) (
 	*HTTPProxy, error) {
-	lb, err := balancer.Build(algo, targetHosts)
-	if err != nil {
-		return nil, err
-	}
+	urls := make([]string, 0)
 
 	urlMap := make(map[string]*httputil.ReverseProxy)
+	alive := make(map[string]bool)
 	for _, targetHost := range targetHosts {
 		url, err := url.Parse(targetHost)
 		if err != nil {
@@ -54,21 +52,25 @@ func NewHTTPProxy(targetHosts []string, algo balancer.Algorithm) (
 			req.Header.Set(XProxy, ReverseProxy)
 			req.Header.Set(XRealIP, getIP(req.RemoteAddr))
 		}
+		alive[url.Host] = true // initial mark alive
+		urlMap[url.Host] = proxy
+		urls = append(urls, url.Host)
+	}
 
-		urlMap[targetHost] = proxy
+	lb, err := balancer.Build(algo, urls)
+	if err != nil {
+		return nil, err
 	}
 
 	return &HTTPProxy{
 		urlMap: urlMap,
 		lb:     lb,
+		alive:  alive,
 	}, nil
 }
 
 // ServeHTTP implements a proxy to the http server
 func (h *HTTPProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	h.RLock()
-	defer h.RUnlock()
-
 	host, err := h.lb.Balance(getIP(r.RemoteAddr))
 	if err != nil {
 		w.WriteHeader(http.StatusBadGateway)
