@@ -10,7 +10,7 @@ import (
 
 //RoundRobin will select the server in turn from the server to proxy
 type RoundRobin struct {
-	sync.Mutex
+	sync.RWMutex
 	i     uint64
 	hosts []string
 }
@@ -43,14 +43,15 @@ func (r *RoundRobin) Remove(host string) {
 	for i, h := range r.hosts {
 		if h == host {
 			r.hosts = append(r.hosts[:i], r.hosts[i+1:]...)
+			return
 		}
 	}
 }
 
 // Balance selects a suitable host according
 func (r *RoundRobin) Balance(_ string) (string, error) {
-	r.Lock()
-	defer r.Unlock()
+	r.RLock()
+	defer r.RUnlock()
 	if len(r.hosts) == 0 {
 		return "", NoHostError
 	}

@@ -41,7 +41,6 @@ func (c *Consistent) Balance(key string) (string, error) {
 	if len(c.ch.Hosts()) == 0 {
 		return "", NoHostError
 	}
-
 	return c.ch.Get(key)
 }
 

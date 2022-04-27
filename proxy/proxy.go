@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"net/url"
+	"sync"
 
 	"github.com/zehuamama/tinybalancer/balancer"
 )
@@ -25,6 +26,8 @@ var (
 
 // HTTPProxy refers to a reverse proxy in the balancer
 type HTTPProxy struct {
+	// protect the balancer to prevent adding or deleting hosts during the balance process
+	sync.RWMutex
 	urlMap map[string]*httputil.ReverseProxy
 	lb     balancer.Balancer
 }
@@ -63,6 +66,9 @@ func NewHTTPProxy(targetHosts []string, algo balancer.Algorithm) (
 
 // ServeHTTP implements a proxy to the http server
 func (h *HTTPProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	h.RLock()
+	defer h.RUnlock()
+
 	host, err := h.lb.Balance(getIP(r.RemoteAddr))
 	if err != nil {
 		w.WriteHeader(http.StatusBadGateway)

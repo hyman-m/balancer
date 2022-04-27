@@ -24,7 +24,7 @@ type host struct {
 
 // P2C refer to the power of 2 random choice
 type P2C struct {
-	sync.Mutex
+	sync.RWMutex
 	hosts   []*host
 	rnd     *rand.Rand
 	loadMap map[string]*host
@@ -70,14 +70,15 @@ func (p *P2C) Remove(host string) {
 	for i, h := range p.hosts {
 		if h.name == host {
 			p.hosts = append(p.hosts[:i], p.hosts[i+1:]...)
+			return
 		}
 	}
 }
 
 // Balance selects a suitable host according to the key value
 func (p *P2C) Balance(key string) (string, error) {
-	p.Lock()
-	defer p.Unlock()
+	p.RLock()
+	defer p.RUnlock()
 
 	if len(p.hosts) == 0 {
 		return "", NoHostError

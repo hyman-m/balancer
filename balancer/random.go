@@ -16,7 +16,7 @@ func init() {
 
 // Random will randomly select a http server from the server
 type Random struct {
-	sync.Mutex
+	sync.RWMutex
 	hosts []string
 	rnd   *rand.Rand
 }
@@ -52,8 +52,8 @@ func (r *Random) Remove(host string) {
 
 // Balance selects a suitable host according
 func (r *Random) Balance(_ string) (string, error) {
-	r.Lock()
-	defer r.Unlock()
+	r.RLock()
+	defer r.RUnlock()
 	if len(r.hosts) == 0 {
 		return "", NoHostError
 	}
