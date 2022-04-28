@@ -26,6 +26,7 @@ type Config struct {
 	Schema            string      `yaml:"schema"`
 	Port              int         `yaml:"port"`
 	SSLCertificate    string      `yaml:"ssl_certificate"`
+	HealthCheck       bool        `yaml:"tcp_health_check"`
 }
 
 // Location routing details of balancer
