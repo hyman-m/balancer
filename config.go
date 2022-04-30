@@ -52,9 +52,10 @@ func ReadConfig(fileName string) (*Config, error) {
 
 // Print print config details
 func (c *Config) Print() {
-	fmt.Printf("%s\nSchema: %s\nPort: %d\nLocation:\n", ascii, c.Schema, c.Port)
+	fmt.Printf("%s\nSchema: %s\nPort: %d\nHealth Check: %v\nLocation:\n",
+		ascii, c.Schema, c.Port, c.HealthCheck)
 	for _, l := range c.Location {
-		fmt.Printf("\tRoute: %s\n\tProxyPass: %s\n\tMode: %s\n",
+		fmt.Printf("\tRoute: %s\n\tProxy Pass: %s\n\tMode: %s\n\n",
 			l.Pattern, l.ProxyPass, l.BalanceMode)
 	}
 }
