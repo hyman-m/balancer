@@ -53,8 +53,10 @@ ___ _ _  _ _   _ ___  ____ _    ____ _  _ ____ ____ ____
 
 Schema: http
 Port: 8089
+Health Check: true
 Location:
-	Route: /
-	ProxyPass: [http://127.0.0.1:1012 http://127.0.0.1:1013]
-	Mode: round-robin
+        Route: /
+        Proxy Pass: [http://192.168.1.1 http://192.168.1.2:1015 https://192.168.1.2 http://my-server.com]
+        Mode: round-robin
+
 ```
