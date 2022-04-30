@@ -50,7 +50,9 @@ func NewHTTPProxy(targetHosts []string, algo balancer.Algorithm) (
 		proxy.Director = func(req *http.Request) {
 			originDirector(req)
 			req.Header.Set(XProxy, ReverseProxy)
-			req.Header.Set(XRealIP, util.GetIP(req.RemoteAddr))
+			if len(req.Header.Get(XRealIP)) == 0 {
+				req.Header.Set(XRealIP, util.GetIP(req.RemoteAddr))
+			}
 		}
 
 		host := util.GetHost(url)
@@ -73,7 +75,12 @@ func NewHTTPProxy(targetHosts []string, algo balancer.Algorithm) (
 
 // ServeHTTP implements a proxy to the http server
 func (h *HTTPProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	host, err := h.lb.Balance(util.GetIP(r.RemoteAddr))
+	clientIP := util.GetIP(r.RemoteAddr)
+	if len(r.Header.Get(XRealIP)) != 0 {
+		clientIP = r.Header.Get(XRealIP)
+	}
+
+	host, err := h.lb.Balance(clientIP)
 	if err != nil {
 		w.WriteHeader(http.StatusBadGateway)
 		errMsg := fmt.Sprintf("balance error: %s", err.Error())
