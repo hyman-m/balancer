@@ -26,7 +26,7 @@ func TestConsistent_Balance(t *testing.T) {
 			"test-1",
 			NewConsistent([]string{"http://127.0.0.1:1011",
 				"http://127.0.0.1:1012", "http://127.0.0.1:1013", "http://127.0.0.1:1014"}),
-			"http://127.0.0.1:1011",
+			"http://127.0.0.1:1012",
 			expect{
 				"http://127.0.0.1:1012",
 				nil,
