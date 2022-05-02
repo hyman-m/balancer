@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"github.com/zehuamama/tinybalancer/balancer"
 	"github.com/zehuamama/tinybalancer/util"
+	"log"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
@@ -75,6 +76,13 @@ func NewHTTPProxy(targetHosts []string, algo balancer.Algorithm) (
 
 // ServeHTTP implements a proxy to the http server
 func (h *HTTPProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	defer func() {
+		if err := recover(); err != nil {
+			log.Printf("proxy panic :%s", err)
+			w.WriteHeader(http.StatusBadGateway)
+		}
+	}()
+
 	clientIP := util.GetIP(r.RemoteAddr)
 	if len(r.Header.Get(XRealIP)) != 0 {
 		clientIP = r.Header.Get(XRealIP)

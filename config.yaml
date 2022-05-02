@@ -12,6 +12,7 @@ port: 8089                        # port for balancer
 ssl_certificate:
 ssl_certificate_key:
 tcp_health_check: true
+health_check_interval: 3          # health check interval (second)
 location:                         # route matching for reverse proxy
   - pattern: /
     proxy_pass:                   # URL of the reverse proxy

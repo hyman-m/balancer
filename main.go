@@ -32,7 +32,7 @@ func main() {
 		}
 		// start health check
 		if config.HealthCheck {
-			httpProxy.HealthCheck()
+			httpProxy.HealthCheck(config.HealthCheckInterval)
 		}
 		router.Handle(l.Pattern, httpProxy)
 	}

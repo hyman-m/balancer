@@ -36,11 +36,14 @@ port: 8089                        # port for balancer
 ssl_certificate:
 ssl_certificate_key:
 tcp_health_check: true
+health_check_interval: 3          # health check interval (second)
 location:                         # route matching for reverse proxy
   - pattern: /
     proxy_pass:                   # URL of the reverse proxy
-    - "http://127.0.0.1:1012"
-    - "http://127.0.0.1:1013"
+    - "http://192.168.1.1"
+    - "http://192.168.1.2:1015"
+    - "https://192.168.1.2"
+    - "http://my-server.com"
     balance_mode: round-robin     # load balancing algorithm
 ```
 and now, you can execute `tinybalancer`, the balancer will print the ascii diagram and configuration details:
@@ -60,3 +63,10 @@ Location:
         Mode: round-robin
 
 ```
+## Contributing
+
+If you are intersted in contributing to tinyrpc, please see here: [CONTRIBUTING](https://github.com/zehuamama/tinybalancer/blob/main/CONTRIBUTING.md)
+
+## License
+
+tinybalancer is licensed under the term of the [BSD 2-Clause License](https://github.com/zehuamama/tinybalancer/blob/main/LICENSE)

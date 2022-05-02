@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-var ConnectionTimeout = 2 * time.Second
+var ConnectionTimeout = 3 * time.Second
 
 func GetIP(remoteAddr string) string {
 	remoteHost, _, _ := net.SplitHostPort(remoteAddr)

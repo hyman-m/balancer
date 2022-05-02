@@ -21,12 +21,13 @@ ___ _ _  _ _   _ ___  ____ _    ____ _  _ ____ ____ ____
 
 // Config configuration details of balancer
 type Config struct {
-	SSLCertificateKey string      `yaml:"ssl_certificate_key"`
-	Location          []*Location `yaml:"location"`
-	Schema            string      `yaml:"schema"`
-	Port              int         `yaml:"port"`
-	SSLCertificate    string      `yaml:"ssl_certificate"`
-	HealthCheck       bool        `yaml:"tcp_health_check"`
+	SSLCertificateKey   string      `yaml:"ssl_certificate_key"`
+	Location            []*Location `yaml:"location"`
+	Schema              string      `yaml:"schema"`
+	Port                int         `yaml:"port"`
+	SSLCertificate      string      `yaml:"ssl_certificate"`
+	HealthCheck         bool        `yaml:"tcp_health_check"`
+	HealthCheckInterval uint        `yaml:"health_check_interval"`
 }
 
 // Location routing details of balancer
@@ -70,6 +71,9 @@ func (c *Config) Validation() error {
 	}
 	if c.Schema == "https" && (len(c.SSLCertificate) == 0 || len(c.SSLCertificateKey) == 0) {
 		return errors.New("the https proxy requires ssl_certificate_key and ssl_certificate")
+	}
+	if c.HealthCheckInterval < 1 {
+		return errors.New("health check interval must be greater than 1s")
 	}
 	return nil
 }

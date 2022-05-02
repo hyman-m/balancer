@@ -11,8 +11,6 @@ import (
 	"github.com/zehuamama/tinybalancer/util"
 )
 
-var HealthCheckTimeout = 5 * time.Second
-
 // ReadAlive reads the alive status of the site
 func (h *HTTPProxy) ReadAlive(url string) bool {
 	h.RLock()
@@ -28,14 +26,14 @@ func (h *HTTPProxy) SetAlive(url string, alive bool) {
 }
 
 // HealthCheck enable a health check goroutine for each agent
-func (h *HTTPProxy) HealthCheck() {
+func (h *HTTPProxy) HealthCheck(interval uint) {
 	for host := range h.hostMap {
-		go h.healthCheck(host)
+		go h.healthCheck(host, interval)
 	}
 }
 
-func (h *HTTPProxy) healthCheck(host string) {
-	ticker := time.Tick(HealthCheckTimeout)
+func (h *HTTPProxy) healthCheck(host string, interval uint) {
+	ticker := time.Tick(time.Duration(interval) * time.Second)
 	for {
 		select {
 		case <-ticker:
