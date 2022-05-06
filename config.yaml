@@ -7,13 +7,16 @@
 # `round-robin` ,`random` ,`p2c`,`consistent-hash`,
 # Among these,`p2c` refers to the power of 2 random choice.
 
-schema: http                      # support http and https
-port: 8089                        # port for balancer
+schema: http                  # support http and https
+port: 8089                    # port for balancer
 ssl_certificate:
 ssl_certificate_key:
 tcp_health_check: true
-health_check_interval: 3          # health check interval (second)
-location:                         # route matching for reverse proxy
+health_check_interval: 3      # health check interval (second)
+# The maximum number of requests that the balancer can handle at the same time
+# 0 refers to no limit to the maximum number of requests
+max_allowed: 100
+location:                     # route matching for reverse proxy
   - pattern: /
     proxy_pass:                   # URL of the reverse proxy
     - "http://192.168.1.1"

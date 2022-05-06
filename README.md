@@ -37,6 +37,9 @@ ssl_certificate:
 ssl_certificate_key:
 tcp_health_check: true
 health_check_interval: 3          # health check interval (second)
+# The maximum number of requests that the balancer can handle at the same time
+# 0 refers to no limit to the maximum number of requests
+max_allowed: 100
 location:                         # route matching for reverse proxy
   - pattern: /
     proxy_pass:                   # URL of the reverse proxy

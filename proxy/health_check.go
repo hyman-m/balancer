@@ -7,8 +7,6 @@ package proxy
 import (
 	"log"
 	"time"
-
-	"github.com/zehuamama/tinybalancer/util"
 )
 
 // ReadAlive reads the alive status of the site
@@ -37,12 +35,12 @@ func (h *HTTPProxy) healthCheck(host string, interval uint) {
 	for {
 		select {
 		case <-ticker:
-			if !util.IsBackendAlive(host) && h.ReadAlive(host) {
+			if !IsBackendAlive(host) && h.ReadAlive(host) {
 				log.Printf("Site unreachable, remove %s from load balancer.", host)
 
 				h.SetAlive(host, false)
 				h.lb.Remove(host)
-			} else if util.IsBackendAlive(host) && !h.ReadAlive(host) {
+			} else if IsBackendAlive(host) && !h.ReadAlive(host) {
 				log.Printf("Site reachable, add %s to load balancer.", host)
 
 				h.SetAlive(host, true)

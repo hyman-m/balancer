@@ -5,6 +5,7 @@
 package main
 
 import (
+	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 	"strconv"
@@ -24,7 +25,7 @@ func main() {
 		log.Fatalf("verify config error: %s", err)
 	}
 
-	router := http.NewServeMux()
+	router := mux.NewRouter()
 	for _, l := range config.Location {
 		httpProxy, err := proxy.NewHTTPProxy(l.ProxyPass, balancer.Algorithm(l.BalanceMode))
 		if err != nil {
@@ -36,7 +37,9 @@ func main() {
 		}
 		router.Handle(l.Pattern, httpProxy)
 	}
-
+	if config.MaxAllowed > 0 {
+		router.Use(maxAllowedMiddleware(config.MaxAllowed))
+	}
 	svr := http.Server{
 		Addr:    ":" + strconv.Itoa(config.Port),
 		Handler: router,
@@ -56,5 +59,19 @@ func main() {
 		if err != nil {
 			log.Fatalf("listen and serve error: %s", err)
 		}
+	}
+}
+
+func maxAllowedMiddleware(n uint) mux.MiddlewareFunc {
+	sem := make(chan struct{}, n)
+	acquire := func() { sem <- struct{}{} }
+	release := func() { <-sem }
+
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			acquire()
+			defer release()
+			next.ServeHTTP(w, r)
+		})
 	}
 }

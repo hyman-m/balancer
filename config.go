@@ -28,6 +28,7 @@ type Config struct {
 	SSLCertificate      string      `yaml:"ssl_certificate"`
 	HealthCheck         bool        `yaml:"tcp_health_check"`
 	HealthCheckInterval uint        `yaml:"health_check_interval"`
+	MaxAllowed          uint        `yaml:"max_allowed"`
 }
 
 // Location routing details of balancer
@@ -73,7 +74,7 @@ func (c *Config) Validation() error {
 		return errors.New("the https proxy requires ssl_certificate_key and ssl_certificate")
 	}
 	if c.HealthCheckInterval < 1 {
-		return errors.New("health check interval must be greater than 1s")
+		return errors.New("health_check_interval must be greater than 0")
 	}
 	return nil
 }

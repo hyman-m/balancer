@@ -1,5 +1,7 @@
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=
+github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
 github.com/lafikl/consistent v0.0.0-20210222184039-5e8acd7e59f2 h1:+FyV24r0YGMdUUapZgmlTU5RNUSxyg6Zgl9hGjbM8zM=
 github.com/lafikl/consistent v0.0.0-20210222184039-5e8acd7e59f2/go.mod h1:JmowInJuqa6EpSut8NSMAZtlvK9uL+8Q1P7tyew5rQY=
 github.com/minio/blake2b-simd v0.0.0-20160723061019-3f5f724cb5b1 h1:lYpkrQH5ajf0OXOcUbGjvZxxijuBwbbmlSxLiuofa+g=

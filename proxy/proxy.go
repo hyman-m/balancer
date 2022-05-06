@@ -7,7 +7,6 @@ package proxy
 import (
 	"fmt"
 	"github.com/zehuamama/tinybalancer/balancer"
-	"github.com/zehuamama/tinybalancer/util"
 	"log"
 	"net/http"
 	"net/http/httputil"
@@ -15,9 +14,10 @@ import (
 	"sync"
 )
 
-const (
-	XRealIP = "X-Real-IP"
-	XProxy  = "X-Proxy"
+var (
+	XRealIP       = http.CanonicalHeaderKey("X-Real-IP")
+	XProxy        = http.CanonicalHeaderKey("X-Proxy")
+	XForwardedFor = http.CanonicalHeaderKey("X-Forwarded-For")
 )
 
 var (
@@ -51,12 +51,10 @@ func NewHTTPProxy(targetHosts []string, algo balancer.Algorithm) (
 		proxy.Director = func(req *http.Request) {
 			originDirector(req)
 			req.Header.Set(XProxy, ReverseProxy)
-			if len(req.Header.Get(XRealIP)) == 0 {
-				req.Header.Set(XRealIP, util.GetIP(req.RemoteAddr))
-			}
+			req.Header.Set(XRealIP, GetIP(req))
 		}
 
-		host := util.GetHost(url)
+		host := GetHost(url)
 		alive[host] = true // initial mark alive
 		hostMap[host] = proxy
 		hosts = append(hosts, host)
@@ -78,21 +76,16 @@ func NewHTTPProxy(targetHosts []string, algo balancer.Algorithm) (
 func (h *HTTPProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	defer func() {
 		if err := recover(); err != nil {
-			log.Printf("proxy panic :%s", err)
+			log.Printf("proxy causes panic :%s", err)
 			w.WriteHeader(http.StatusBadGateway)
+			w.Write([]byte(err.(error).Error()))
 		}
 	}()
 
-	clientIP := util.GetIP(r.RemoteAddr)
-	if len(r.Header.Get(XRealIP)) != 0 {
-		clientIP = r.Header.Get(XRealIP)
-	}
-
-	host, err := h.lb.Balance(clientIP)
+	host, err := h.lb.Balance(GetIP(r))
 	if err != nil {
 		w.WriteHeader(http.StatusBadGateway)
-		errMsg := fmt.Sprintf("balance error: %s", err.Error())
-		w.Write([]byte(errMsg))
+		w.Write([]byte(fmt.Sprintf("balance error: %s", err.Error())))
 		return
 	}
 
