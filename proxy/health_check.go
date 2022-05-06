@@ -31,21 +31,19 @@ func (h *HTTPProxy) HealthCheck(interval uint) {
 }
 
 func (h *HTTPProxy) healthCheck(host string, interval uint) {
-	ticker := time.Tick(time.Duration(interval) * time.Second)
-	for {
-		select {
-		case <-ticker:
-			if !IsBackendAlive(host) && h.ReadAlive(host) {
-				log.Printf("Site unreachable, remove %s from load balancer.", host)
+	ticker := time.NewTicker(time.Duration(interval) * time.Second)
+	for range ticker.C {
+		if !IsBackendAlive(host) && h.ReadAlive(host) {
+			log.Printf("Site unreachable, remove %s from load balancer.", host)
 
-				h.SetAlive(host, false)
-				h.lb.Remove(host)
-			} else if IsBackendAlive(host) && !h.ReadAlive(host) {
-				log.Printf("Site reachable, add %s to load balancer.", host)
+			h.SetAlive(host, false)
+			h.lb.Remove(host)
+		} else if IsBackendAlive(host) && !h.ReadAlive(host) {
+			log.Printf("Site reachable, add %s to load balancer.", host)
 
-				h.SetAlive(host, true)
-				h.lb.Add(host)
-			}
+			h.SetAlive(host, true)
+			h.lb.Add(host)
 		}
 	}
+
 }

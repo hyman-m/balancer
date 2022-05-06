@@ -65,7 +65,7 @@ func (c *Config) Print() {
 // Validation verify the configuration details of the balancer
 func (c *Config) Validation() error {
 	if c.Schema != "http" && c.Schema != "https" {
-		return errors.New(fmt.Sprintf("the schema \"%s\" not supported", c.Schema))
+		return fmt.Errorf("the schema \"%s\" not supported", c.Schema)
 	}
 	if len(c.Location) == 0 {
 		return errors.New("the details of location cannot be null")

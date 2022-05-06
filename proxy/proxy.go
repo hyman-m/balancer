@@ -78,14 +78,14 @@ func (h *HTTPProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		if err := recover(); err != nil {
 			log.Printf("proxy causes panic :%s", err)
 			w.WriteHeader(http.StatusBadGateway)
-			w.Write([]byte(err.(error).Error()))
+			_, _ = w.Write([]byte(err.(error).Error()))
 		}
 	}()
 
 	host, err := h.lb.Balance(GetIP(r))
 	if err != nil {
 		w.WriteHeader(http.StatusBadGateway)
-		w.Write([]byte(fmt.Sprintf("balance error: %s", err.Error())))
+		_, _ = w.Write([]byte(fmt.Sprintf("balance error: %s", err.Error())))
 		return
 	}
 
