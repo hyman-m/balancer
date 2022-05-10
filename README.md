@@ -4,8 +4,8 @@
 
 tinybalancer is a reverse proxy load balancer that supports http and https. 
 
-* It currently supports four algorithms, namely `round-robin`, `random`, `the power of 2 random choice` and `consistent hash`.
-* tinybalancer will periodically perform `health check` on all proxy sites. When the site is unreachable, it will be automatically removed from the balancer. However, tinybalancer will still perform `health check` on unreachable sites. When the site is reachable, it will automatically add it to the balancer.
+* It currently supports four algorithms, namely `round robin`, `random`, `the power of 2 random choice` , `consistent hash` and `ip hash`.
+* tinybalancer will perform `health check` on all proxy sites periodically. When the site is unreachable, it will be removed from the balancer automatically . However, tinybalancer will still perform `health check` on unreachable sites. When the site is reachable, it will add it to the balancer automatically.
 ## Install
 First download the source code of balancer:
 ```shell
@@ -28,7 +28,7 @@ Balancer needs to configure the `config.yaml` file, the content is as follows:
 
 
 # The load balancing algorithms supported by the balancer are:
-# `round-robin` ,`random` ,`p2c`,`consistent-hash`,
+# `round-robin` ,`random` ,`p2c`,`consistent-hash`, ip hash
 # Among these,`p2c` refers to the power of 2 random choice.
 
 schema: http                      # support http and https
