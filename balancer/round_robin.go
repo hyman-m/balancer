@@ -16,7 +16,7 @@ type RoundRobin struct {
 }
 
 func init() {
-	factories["round-robin"] = NewRoundRobin
+	factories[R2Balancer] = NewRoundRobin
 }
 
 // NewRoundRobin create new RoundRobin balancer

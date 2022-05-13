@@ -11,7 +11,7 @@ import (
 )
 
 func init() {
-	factories["random"] = NewRandom
+	factories[RandomBalancer] = NewRandom
 }
 
 // Random will randomly select a http server from the server

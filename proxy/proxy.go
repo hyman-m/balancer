@@ -35,7 +35,7 @@ type HTTPProxy struct {
 }
 
 // NewHTTPProxy create  new reverse proxy with url and balancer algorithm
-func NewHTTPProxy(targetHosts []string, algo balancer.Algorithm) (
+func NewHTTPProxy(targetHosts []string, algorithm string) (
 	*HTTPProxy, error) {
 
 	hosts := make([]string, 0)
@@ -61,7 +61,7 @@ func NewHTTPProxy(targetHosts []string, algo balancer.Algorithm) (
 		hosts = append(hosts, host)
 	}
 
-	lb, err := balancer.Build(algo, hosts)
+	lb, err := balancer.Build(algorithm, hosts)
 	if err != nil {
 		return nil, err
 	}

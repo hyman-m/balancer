@@ -19,7 +19,7 @@ compile the source code:
 ```
 
 ## Run
-Balancer needs to configure the `config.yaml` file, the content is as follows:
+`Balancer` needs to configure the `config.yaml` file, the content is as follows:
 
 ```yaml
 # Copyright 2022 <mzh.scnu@qq.com>. All rights reserved.
@@ -28,7 +28,7 @@ Balancer needs to configure the `config.yaml` file, the content is as follows:
 
 
 # The load balancing algorithms supported by the balancer are:
-# `round-robin` ,`random` ,`p2c`,`consistent-hash`, ip-hash
+# `round-robin` ,`random` ,`p2c`,`consistent-hash`, `ip-hash`
 # Among these,`p2c` refers to the power of 2 random choice.
 
 schema: http                      # support http and https
@@ -66,6 +66,9 @@ Location:
         Mode: round-robin
 
 ```
+## Use API
+
+
 ## Contributing
 
 If you are intersted in contributing to balancer, please see here: [CONTRIBUTING](https://github.com/zehuamama/balancer/blob/main/CONTRIBUTING.md)

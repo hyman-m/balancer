@@ -14,7 +14,7 @@ import (
 const Salt = "%#!"
 
 func init() {
-	factories["p2c"] = NewP2C
+	factories[P2CBalancer] = NewP2C
 }
 
 type host struct {

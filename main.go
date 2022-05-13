@@ -10,7 +10,6 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/zehuamama/balancer/balancer"
 	"github.com/zehuamama/balancer/proxy"
 )
 
@@ -27,7 +26,7 @@ func main() {
 
 	router := mux.NewRouter()
 	for _, l := range config.Location {
-		httpProxy, err := proxy.NewHTTPProxy(l.ProxyPass, balancer.Algorithm(l.BalanceMode))
+		httpProxy, err := proxy.NewHTTPProxy(l.ProxyPass, l.BalanceMode)
 		if err != nil {
 			log.Fatalf("create proxy error: %s", err)
 		}

@@ -26,14 +26,11 @@ type Balancer interface {
 // and the factory design pattern is used here
 type Factory func([]string) Balancer
 
-// Algorithm refers to the load balancing algorithm type of the balancer
-type Algorithm string
-
-var factories = make(map[Algorithm]Factory)
+var factories = make(map[string]Factory)
 
 // Build generates the corresponding Balancer according to the algorithm
-func Build(algo Algorithm, hosts []string) (Balancer, error) {
-	factory, ok := factories[algo]
+func Build(algorithm string, hosts []string) (Balancer, error) {
+	factory, ok := factories[algorithm]
 	if !ok {
 		return nil, AlgorithmNotSupportedError
 	}

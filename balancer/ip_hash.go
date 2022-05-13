@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-	factories["ip-hash"] = NewIPHash
+	factories[IPHashBalancer] = NewIPHash
 }
 
 // IPHash will choose a host based on the client's IP address

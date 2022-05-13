@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	factories["consistent-hash"] = NewConsistent
+	factories[ConsistentHashBalancer] = NewConsistent
 }
 
 // Consistent refers to consistent hash
