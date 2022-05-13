@@ -5,11 +5,11 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 	"strconv"
 
+	"github.com/gorilla/mux"
 	"github.com/zehuamama/balancer/proxy"
 )
 

@@ -67,7 +67,55 @@ Location:
 
 ```
 ## Use API
+`balancer` is also a go library that implements load balancing algorithms,Build the load balancer with `balancer.Build`:
+```go
+	hosts := []string{
+		"http://192.168.11.101",
+		"http://192.168.11.102",
+		"http://192.168.11.103",
+		"http://192.168.11.104",
+	}
 
+    lb, err := balancer.Build(balancer.P2CBalancer, hosts)
+    if err != nil {
+        return err
+    }
+```
+each load balancer implements the `balancer.Balancer` interface:
+```go
+type Balancer interface {
+	Add(string)
+	Remove(string)
+	Balance(string) (string, error)
+	Inc(string)
+	Done(string)
+}
+```
+currently supports the following load balancing algorithms:
+```go
+const (
+	IPHashBalancer         = "ip-hash"
+	ConsistentHashBalancer = "consistent-hash"
+	P2CBalancer            = "p2c"
+	RandomBalancer         = "random"
+	R2Balancer             = "round-robin"
+)
+```
+and you can use balancer like this:
+```go
+
+	clientAddr := "172.160.1.5"  // request IP
+	
+	targetHost, err := lb.Balance(clientAddr) 
+	if err != nil {
+		log.Fatal(err)
+	}
+	
+	lb.Inc(targetHost)
+	defer lb.Done(targetHost)
+
+	// route to target host
+```
 
 ## Contributing
 
