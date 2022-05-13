@@ -67,19 +67,24 @@ Location:
 
 ```
 ## Use API
-`balancer` is also a go library that implements load balancing algorithms,Build the load balancer with `balancer.Build`:
-```go
-	hosts := []string{
-		"http://192.168.11.101",
-		"http://192.168.11.102",
-		"http://192.168.11.103",
-		"http://192.168.11.104",
-	}
+`balancer` is also a go library that implements load balancing algorithms, it can be used alone as an API, you need to import it into your project first:
+```shell
+> go get github.com/zehuamama/balancer/balancer
+```
 
-    lb, err := balancer.Build(balancer.P2CBalancer, hosts)
-    if err != nil {
-        return err
-    }
+Build the load balancer with `balancer.Build`:
+```go
+hosts := []string{
+	"http://192.168.11.101",
+	"http://192.168.11.102",
+	"http://192.168.11.103",
+	"http://192.168.11.104",
+}
+
+lb, err := balancer.Build(balancer.P2CBalancer, hosts)
+if err != nil {
+	return err
+}
 ```
 each load balancer implements the `balancer.Balancer` interface:
 ```go
@@ -104,17 +109,17 @@ const (
 and you can use balancer like this:
 ```go
 
-	clientAddr := "172.160.1.5"  // request IP
+clientAddr := "172.160.1.5"  // request IP
 	
-	targetHost, err := lb.Balance(clientAddr) 
-	if err != nil {
-		log.Fatal(err)
-	}
+targetHost, err := lb.Balance(clientAddr) 
+if err != nil {
+	log.Fatal(err)
+}
 	
-	lb.Inc(targetHost)
-	defer lb.Done(targetHost)
+lb.Inc(targetHost)
+defer lb.Done(targetHost)
 
-	// route to target host
+// route to target host
 ```
 
 ## Contributing
