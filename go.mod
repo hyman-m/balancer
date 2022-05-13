@@ -1,4 +1,4 @@
-module github.com/zehuamama/tinybalancer
+module github.com/zehuamama/balancer
 
 go 1.17
 

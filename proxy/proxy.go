@@ -6,12 +6,13 @@ package proxy
 
 import (
 	"fmt"
-	"github.com/zehuamama/tinybalancer/balancer"
 	"log"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
 	"sync"
+
+	"github.com/zehuamama/balancer/balancer"
 )
 
 var (

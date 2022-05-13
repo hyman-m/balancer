@@ -10,8 +10,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/zehuamama/tinybalancer/balancer"
-	"github.com/zehuamama/tinybalancer/proxy"
+	"github.com/zehuamama/balancer/balancer"
+	"github.com/zehuamama/balancer/proxy"
 )
 
 func main() {

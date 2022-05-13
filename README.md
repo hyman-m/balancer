@@ -1,19 +1,19 @@
 # tinybalancer
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/zehuamama/tinybalancer)&nbsp;](https://goreportcard.com/report/github.com/zehuamama/tinybalancer)![GitHub top language](https://img.shields.io/github/languages/top/zehuamama/tinybalancer)&nbsp;![GitHub](https://img.shields.io/github/license/zehuamama/tinybalancer)&nbsp;[![CodeFactor](https://www.codefactor.io/repository/github/zehuamama/tinybalancer/badge)](https://www.codefactor.io/repository/github/zehuamama/tinybalancer)&nbsp;[![codecov](https://codecov.io/gh/zehuamama/tinybalancer/branch/main/graph/badge.svg)](https://codecov.io/gh/zehuamama/tinybalancer)&nbsp; ![go_version](https://img.shields.io/badge/go%20version-1.17-yellow)
+[![Go Report Card](https://goreportcard.com/badge/github.com/zehuamama/balancer)&nbsp;](https://goreportcard.com/report/github.com/zehuamama/balancer)![GitHub top language](https://img.shields.io/github/languages/top/zehuamama/balancer)&nbsp;![GitHub](https://img.shields.io/github/license/zehuamama/balancer)&nbsp;[![CodeFactor](https://www.codefactor.io/repository/github/zehuamama/balancer/badge)](https://www.codefactor.io/repository/github/zehuamama/balancer)&nbsp;[![codecov](https://codecov.io/gh/zehuamama/balancer/branch/main/graph/badge.svg)](https://codecov.io/gh/zehuamama/balancer)&nbsp; ![go_version](https://img.shields.io/badge/go%20version-1.17-yellow)
 
-tinybalancer is a reverse proxy load balancer that supports http and https. 
+balancer is a reverse proxy load balancer that supports http and https. 
 
 * It currently supports four algorithms, namely `round robin`, `random`, `the power of 2 random choice` , `consistent hash` and `ip hash`.
-* tinybalancer will perform `health check` on all proxy sites periodically. When the site is unreachable, it will be removed from the balancer automatically . However, tinybalancer will still perform `health check` on unreachable sites. When the site is reachable, it will add it to the balancer automatically.
+* `balancer` will perform `health check` on all proxy sites periodically. When the site is unreachable, it will be removed from the balancer automatically . However, `balancer` will still perform `health check` on unreachable sites. When the site is reachable, it will add it to the balancer automatically.
 ## Install
 First download the source code of balancer:
 ```shell
-> git clone https://github.com/zehuamama/tinybalancer.git
+> git clone https://github.com/zehuamama/balancer.git
 ```
 compile the source code:
 ```shell
-> cd ./tinybalancer
+> cd ./balancer
 
 > go build
 ```
@@ -49,9 +49,9 @@ location:                         # route matching for reverse proxy
     - "http://my-server.com"
     balance_mode: round-robin     # load balancing algorithm
 ```
-and now, you can execute `tinybalancer`, the balancer will print the ascii diagram and configuration details:
+and now, you can execute `balancer`, the balancer will print the ascii diagram and configuration details:
 ```shell
-> ./tinybalancer
+> ./balancer
 
 ___ _ _  _ _   _ ___  ____ _    ____ _  _ ____ ____ ____ 
  |  | |\ |  \_/  |__] |__| |    |__| |\ | |    |___ |__/ 
@@ -68,8 +68,8 @@ Location:
 ```
 ## Contributing
 
-If you are intersted in contributing to tinyrpc, please see here: [CONTRIBUTING](https://github.com/zehuamama/tinybalancer/blob/main/CONTRIBUTING.md)
+If you are intersted in contributing to balancer, please see here: [CONTRIBUTING](https://github.com/zehuamama/balancer/blob/main/CONTRIBUTING.md)
 
 ## License
 
-tinybalancer is licensed under the term of the [BSD 2-Clause License](https://github.com/zehuamama/tinybalancer/blob/main/LICENSE)
+balancer is licensed under the term of the [BSD 2-Clause License](https://github.com/zehuamama/balancer/blob/main/LICENSE)
