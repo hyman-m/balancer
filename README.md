@@ -19,36 +19,8 @@ compile the source code:
 ```
 
 ## Run
-`Balancer` needs to configure the `config.yaml` file, the content is as follows:
+`Balancer` needs to configure the `config.yaml` file, see [config.yaml](https://github.com/zehuamama/balancer/blob/main/config.yaml) :
 
-```yaml
-# Copyright 2022 <mzh.scnu@qq.com>. All rights reserved.
-# Use of this source code is governed by a BSD-style
-# license that can be found in the LICENSE file.
-
-
-# The load balancing algorithms supported by the balancer are:
-# `round-robin` ,`random` ,`p2c`,`consistent-hash`, `ip-hash`
-# Among these,`p2c` refers to the power of 2 random choice.
-
-schema: http                      # support http and https
-port: 8089                        # port for balancer
-ssl_certificate:
-ssl_certificate_key:
-tcp_health_check: true
-health_check_interval: 3          # health check interval (second)
-# The maximum number of requests that the balancer can handle at the same time
-# 0 refers to no limit to the maximum number of requests
-max_allowed: 100
-location:                         # route matching for reverse proxy
-  - pattern: /
-    proxy_pass:                   # URL of the reverse proxy
-    - "http://192.168.1.1"
-    - "http://192.168.1.2:1015"
-    - "https://192.168.1.2"
-    - "http://my-server.com"
-    balance_mode: round-robin     # load balancing algorithm
-```
 and now, you can execute `balancer`, the balancer will print the ascii diagram and configuration details:
 ```shell
 > ./balancer
