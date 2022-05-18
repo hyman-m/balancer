@@ -15,14 +15,10 @@ func init() {
 }
 
 // Tag .
-func (h *host) Tag() interface{} {
-	return h.name
-}
+func (h *host) Tag() interface{} { return h.name }
 
 // Key .
-func (h *host) Key() float64 {
-	return float64(h.load)
-}
+func (h *host) Key() float64 { return float64(h.load) }
 
 // LeastLoad will choose a host based on the least load host
 type LeastLoad struct {
@@ -46,7 +42,7 @@ func (l *LeastLoad) Add(hostName string) {
 	if ok := l.heap.GetValue(hostName); ok != nil {
 		return
 	}
-	l.heap.InsertValue(&host{hostName, 0})
+	_ = l.heap.InsertValue(&host{hostName, 0})
 }
 
 // Remove new host from the balancer
@@ -56,7 +52,7 @@ func (l *LeastLoad) Remove(hostName string) {
 	if ok := l.heap.GetValue(hostName); ok == nil {
 		return
 	}
-	l.heap.Delete(hostName)
+	_ = l.heap.Delete(hostName)
 }
 
 // Balance selects a suitable host according
@@ -78,7 +74,7 @@ func (l *LeastLoad) Inc(hostName string) {
 	}
 	h := l.heap.GetValue(hostName)
 	h.(*host).load++
-	l.heap.IncreaseKeyValue(h)
+	_ = l.heap.IncreaseKeyValue(h)
 }
 
 // Done refers to the number of connections to the server `-1`
@@ -90,5 +86,5 @@ func (l *LeastLoad) Done(hostName string) {
 	}
 	h := l.heap.GetValue(hostName)
 	h.(*host).load--
-	l.heap.DecreaseKeyValue(h)
+	_ = l.heap.DecreaseKeyValue(h)
 }
