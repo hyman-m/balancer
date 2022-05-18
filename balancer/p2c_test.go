@@ -117,6 +117,8 @@ func TestP2C_Balance(t *testing.T) {
 	t.Run(c.name, func(t *testing.T) {
 		c.lb.Inc("http://127.0.0.1:1013")
 		c.lb.Inc("http://127.0.0.1:1013")
+		c.lb.Inc("http://127.0.0.1:1")
+		c.lb.Done("http://127.0.0.1:1")
 		c.lb.Done("http://127.0.0.1:1013")
 		host, err := c.lb.Balance(c.key)
 		assert.Equal(t, c.expect.reply, host)
