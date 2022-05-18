@@ -2,10 +2,16 @@
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/zehuamama/balancer)&nbsp;](https://goreportcard.com/report/github.com/zehuamama/balancer)![GitHub top language](https://img.shields.io/github/languages/top/zehuamama/balancer)&nbsp;![GitHub](https://img.shields.io/github/license/zehuamama/balancer)&nbsp;[![CodeFactor](https://www.codefactor.io/repository/github/zehuamama/balancer/badge)](https://www.codefactor.io/repository/github/zehuamama/balancer)&nbsp;[![codecov](https://codecov.io/gh/zehuamama/balancer/branch/main/graph/badge.svg)](https://codecov.io/gh/zehuamama/balancer)&nbsp; ![go_version](https://img.shields.io/badge/go%20version-1.17-yellow)
 
-balancer is a reverse proxy load balancer that supports http and https. 
+`balancer` is a layer 7 load balancer that supports http and https, and it is also a go library that implements `load balancing` algorithms.
 
-* It currently supports four algorithms, namely `round robin`, `random`, `the power of 2 random choice` , `consistent hash` , `ip hash` and `least-load`.
-* `balancer` will perform `health check` on all proxy sites periodically. When the site is unreachable, it will be removed from the balancer automatically . However, `balancer` will still perform `health check` on unreachable sites. When the site is reachable, it will add it to the balancer automatically.
+It currently supports load balancing algorithms: 
+* `round robin`
+* `random`
+* `the power of 2 random choice`
+* `consistent hash`
+* `ip hash`
+* `least load`
+
 ## Install
 First download the source code of balancer:
 ```shell
@@ -38,7 +44,9 @@ Location:
         Mode: round-robin
 
 ```
-## Use API
+`balancer` will perform `health check` on all proxy sites periodically. When the site is unreachable, it will be removed from the balancer automatically . However, `balancer` will still perform `health check` on unreachable sites. When the site is reachable, it will add it to the balancer automatically.
+
+## API Usage
 `balancer` is also a go library that implements load balancing algorithms, it can be used alone as an API, you need to import it into your project first:
 ```shell
 > go get github.com/zehuamama/balancer/balancer
@@ -58,6 +66,21 @@ if err != nil {
 	return err
 }
 ```
+and you can use balancer like this:
+```go
+
+clientAddr := "172.160.1.5"  // request IP
+	
+targetHost, err := lb.Balance(clientAddr) 
+if err != nil {
+	log.Fatal(err)
+}
+	
+lb.Inc(targetHost)
+defer lb.Done(targetHost)
+
+// route to target host
+```
 each load balancer implements the `balancer.Balancer` interface:
 ```go
 type Balancer interface {
@@ -76,24 +99,10 @@ const (
 	P2CBalancer            = "p2c"
 	RandomBalancer         = "random"
 	R2Balancer             = "round-robin"
-    LeastLoadBalancer      = "least-load"
+    	LeastLoadBalancer      = "least-load"
 )
 ```
-and you can use balancer like this:
-```go
 
-clientAddr := "172.160.1.5"  // request IP
-	
-targetHost, err := lb.Balance(clientAddr) 
-if err != nil {
-	log.Fatal(err)
-}
-	
-lb.Inc(targetHost)
-defer lb.Done(targetHost)
-
-// route to target host
-```
 
 ## Contributing
 
