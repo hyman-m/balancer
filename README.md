@@ -5,12 +5,13 @@
 `balancer` is a layer 7 load balancer that supports http and https, and it is also a go library that implements `load balancing` algorithms.
 
 It currently supports load balancing algorithms: 
-* `round robin`
+* `round-robin`
 * `random`
-* `the power of 2 random choice`
+* `power of 2 random choice`
 * `consistent hash`
-* `ip hash`
-* `least load`
+* `consistent hash with bounded`
+* `ip-hash`
+* `least-load`
 
 ## Install
 First download the source code of balancer:
@@ -100,6 +101,7 @@ const (
 	RandomBalancer         = "random"
 	R2Balancer             = "round-robin"
 	LeastLoadBalancer      = "least-load"
+	BoundedBalancer        = "bounded"
 )
 ```
 

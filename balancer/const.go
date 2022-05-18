@@ -11,4 +11,5 @@ const (
 	RandomBalancer         = "random"
 	R2Balancer             = "round-robin"
 	LeastLoadBalancer      = "least-load"
+	BoundedBalancer        = "bounded"
 )
