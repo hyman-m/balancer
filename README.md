@@ -4,7 +4,7 @@
 
 balancer is a reverse proxy load balancer that supports http and https. 
 
-* It currently supports four algorithms, namely `round robin`, `random`, `the power of 2 random choice` , `consistent hash` and `ip hash`.
+* It currently supports four algorithms, namely `round robin`, `random`, `the power of 2 random choice` , `consistent hash` , `ip hash` and `least-load`.
 * `balancer` will perform `health check` on all proxy sites periodically. When the site is unreachable, it will be removed from the balancer automatically . However, `balancer` will still perform `health check` on unreachable sites. When the site is reachable, it will add it to the balancer automatically.
 ## Install
 First download the source code of balancer:
@@ -76,6 +76,7 @@ const (
 	P2CBalancer            = "p2c"
 	RandomBalancer         = "random"
 	R2Balancer             = "round-robin"
+    LeastLoadBalancer      = "least-load"
 )
 ```
 and you can use balancer like this:

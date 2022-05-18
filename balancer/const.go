@@ -10,4 +10,5 @@ const (
 	P2CBalancer            = "p2c"
 	RandomBalancer         = "random"
 	R2Balancer             = "round-robin"
+	LeastLoadBalancer      = "least-load"
 )
