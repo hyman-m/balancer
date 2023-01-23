@@ -22,15 +22,23 @@ func TestNewIPHash_Add(t *testing.T) {
 			NewIPHash([]string{"http://127.0.0.1:1011",
 				"http://127.0.0.1:1012", "http://127.0.0.1:1013"}),
 			"http://127.0.0.1:1012",
-			&IPHash{hosts: []string{"http://127.0.0.1:1011",
-				"http://127.0.0.1:1012", "http://127.0.0.1:1013"}},
+			&IPHash{
+				BaseBalancer: BaseBalancer{
+					hosts: []string{"http://127.0.0.1:1011",
+						"http://127.0.0.1:1012", "http://127.0.0.1:1013"},
+				},
+			},
 		},
 		{
 			"test-2",
 			NewIPHash([]string{"http://127.0.0.1:1011", "http://127.0.0.1:1012"}),
 			"http://127.0.0.1:1013",
-			&IPHash{hosts: []string{"http://127.0.0.1:1011",
-				"http://127.0.0.1:1012", "http://127.0.0.1:1013"}},
+			&IPHash{
+				BaseBalancer: BaseBalancer{
+					hosts: []string{"http://127.0.0.1:1011",
+						"http://127.0.0.1:1012", "http://127.0.0.1:1013"},
+				},
+			},
 		},
 	}
 	for _, c := range cases {
@@ -54,13 +62,23 @@ func TestIPHash_Remove(t *testing.T) {
 			NewIPHash([]string{"http://127.0.0.1:1011",
 				"http://127.0.0.1:1012", "http://127.0.0.1:1013"}),
 			"http://127.0.0.1:1012",
-			&IPHash{hosts: []string{"http://127.0.0.1:1011", "http://127.0.0.1:1013"}},
+			&IPHash{
+				BaseBalancer: BaseBalancer{
+					hosts: []string{"http://127.0.0.1:1011",
+						"http://127.0.0.1:1013"},
+				},
+			},
 		},
 		{
 			"test-2",
 			NewIPHash([]string{"http://127.0.0.1:1011", "http://127.0.0.1:1012"}),
 			"http://127.0.0.1:1013",
-			&IPHash{hosts: []string{"http://127.0.0.1:1011", "http://127.0.0.1:1012"}},
+			&IPHash{
+				BaseBalancer: BaseBalancer{
+					hosts: []string{"http://127.0.0.1:1011",
+						"http://127.0.0.1:1012"},
+				},
+			},
 		},
 	}
 	for _, c := range cases {

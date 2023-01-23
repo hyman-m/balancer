@@ -14,12 +14,15 @@ func init() {
 
 // Consistent refers to consistent hash
 type Consistent struct {
+	BaseBalancer
 	ch *consistent.Consistent
 }
 
 // NewConsistent create new Consistent balancer
 func NewConsistent(hosts []string) Balancer {
-	c := &Consistent{consistent.New()}
+	c := &Consistent{
+		ch: consistent.New(),
+	}
 	for _, h := range hosts {
 		c.ch.Add(h)
 	}
@@ -43,9 +46,3 @@ func (c *Consistent) Balance(key string) (string, error) {
 	}
 	return c.ch.Get(key)
 }
-
-// Inc .
-func (c *Consistent) Inc(_ string) {}
-
-// Done .
-func (c *Consistent) Done(_ string) {}

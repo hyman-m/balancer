@@ -4,15 +4,10 @@
 
 package balancer
 
-import (
-	"sync"
-)
-
 //RoundRobin will select the server in turn from the server to proxy
 type RoundRobin struct {
-	sync.RWMutex
-	i     uint64
-	hosts []string
+	BaseBalancer
+	i uint64
 }
 
 func init() {
@@ -21,30 +16,11 @@ func init() {
 
 // NewRoundRobin create new RoundRobin balancer
 func NewRoundRobin(hosts []string) Balancer {
-	return &RoundRobin{i: 0, hosts: hosts}
-}
-
-// Add new host to the balancer
-func (r *RoundRobin) Add(host string) {
-	r.Lock()
-	defer r.Unlock()
-	for _, h := range r.hosts {
-		if h == host {
-			return
-		}
-	}
-	r.hosts = append(r.hosts, host)
-}
-
-// Remove new host from the balancer
-func (r *RoundRobin) Remove(host string) {
-	r.Lock()
-	defer r.Unlock()
-	for i, h := range r.hosts {
-		if h == host {
-			r.hosts = append(r.hosts[:i], r.hosts[i+1:]...)
-			return
-		}
+	return &RoundRobin{
+		i: 0,
+		BaseBalancer: BaseBalancer{
+			hosts: hosts,
+		},
 	}
 }
 
@@ -59,9 +35,3 @@ func (r *RoundRobin) Balance(_ string) (string, error) {
 	r.i++
 	return host, nil
 }
-
-// Inc .
-func (r *RoundRobin) Inc(_ string) {}
-
-// Done .
-func (r *RoundRobin) Done(_ string) {}
