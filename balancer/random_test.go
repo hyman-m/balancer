@@ -23,19 +23,39 @@ func TestRandom_Add(t *testing.T) {
 	}{
 		{
 			"test-1",
-			&Random{hosts: []string{"http://127.0.0.1:1011",
-				"http://127.0.0.1:1012", "http://127.0.0.1:1013"}, rnd: rnd},
+			&Random{
+				BaseBalancer: BaseBalancer{
+					hosts: []string{"http://127.0.0.1:1011",
+						"http://127.0.0.1:1012", "http://127.0.0.1:1013"},
+				},
+				rnd: rnd,
+			},
 			"http://127.0.0.1:1013",
-			&Random{hosts: []string{"http://127.0.0.1:1011",
-				"http://127.0.0.1:1012", "http://127.0.0.1:1013"}, rnd: rnd},
+			&Random{
+				BaseBalancer: BaseBalancer{
+					hosts: []string{"http://127.0.0.1:1011",
+						"http://127.0.0.1:1012", "http://127.0.0.1:1013"},
+				},
+				rnd: rnd,
+			},
 		},
 		{
 			"test-2",
-			&Random{hosts: []string{"http://127.0.0.1:1011",
-				"http://127.0.0.1:1012"}, rnd: rnd},
+			&Random{
+				BaseBalancer: BaseBalancer{
+					hosts: []string{"http://127.0.0.1:1011",
+						"http://127.0.0.1:1012"},
+				},
+				rnd: rnd,
+			},
 			"http://127.0.0.1:1012",
-			&Random{hosts: []string{"http://127.0.0.1:1011",
-				"http://127.0.0.1:1012"}, rnd: rnd},
+			&Random{
+				BaseBalancer: BaseBalancer{
+					hosts: []string{"http://127.0.0.1:1011",
+						"http://127.0.0.1:1012"},
+				},
+				rnd: rnd,
+			},
 		},
 	}
 	for _, c := range cases {
@@ -57,19 +77,39 @@ func TestRandom_Remove(t *testing.T) {
 	}{
 		{
 			"test-1",
-			&Random{hosts: []string{"http://127.0.0.1:1011",
-				"http://127.0.0.1:1012", "http://127.0.0.1:1013"}, rnd: rnd},
+			&Random{
+				BaseBalancer: BaseBalancer{
+					hosts: []string{"http://127.0.0.1:1011",
+						"http://127.0.0.1:1012", "http://127.0.0.1:1013"},
+				},
+				rnd: rnd,
+			},
 			"http://127.0.0.1:1013",
-			&Random{hosts: []string{"http://127.0.0.1:1011",
-				"http://127.0.0.1:1012"}, rnd: rnd},
+			&Random{
+				BaseBalancer: BaseBalancer{
+					hosts: []string{"http://127.0.0.1:1011",
+						"http://127.0.0.1:1012"},
+				},
+				rnd: rnd,
+			},
 		},
 		{
 			"test-2",
-			&Random{hosts: []string{"http://127.0.0.1:1011",
-				"http://127.0.0.1:1012"}, rnd: rnd},
+			&Random{
+				BaseBalancer: BaseBalancer{
+					hosts: []string{"http://127.0.0.1:1011",
+						"http://127.0.0.1:1012"},
+				},
+				rnd: rnd,
+			},
 			"http://127.0.0.1:1013",
-			&Random{hosts: []string{"http://127.0.0.1:1011",
-				"http://127.0.0.1:1012"}, rnd: rnd},
+			&Random{
+				BaseBalancer: BaseBalancer{
+					hosts: []string{"http://127.0.0.1:1011",
+						"http://127.0.0.1:1012"},
+				},
+				rnd: rnd,
+			},
 		},
 	}
 	for _, c := range cases {
