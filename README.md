@@ -26,7 +26,7 @@ compile the source code:
 ```
 
 ## Run
-~~`Balancer` needs to configure the `config.yaml` file, see [config.yaml](https://github.com/zehuamama/balancer/blob/main/config.yaml) :
+`Balancer` needs to configure the `config.yaml` file, see [config.yaml](https://github.com/zehuamama/balancer/blob/main/config.yaml) :
 
 and now, you can execute `balancer`, the balancer will print the ascii diagram and configuration details:
 ```shell
@@ -112,4 +112,4 @@ If you are interested in contributing to balancer, please see here: [CONTRIBUTIN
 
 ## License
 
-balancer is licensed under the term of the [BSD 2-Clause License](https://github.com/zehuamama/balancer/blob/main/LICENSE)~~
+balancer is licensed under the term of the [BSD 2-Clause License](https://github.com/zehuamama/balancer/blob/main/LICENSE)
