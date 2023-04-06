@@ -108,7 +108,7 @@ const (
 
 ## Contributing
 
-If you are intersted in contributing to balancer, please see here: [CONTRIBUTING](https://github.com/zehuamama/balancer/blob/main/CONTRIBUTING.md)
+If you are interested in contributing to balancer, please see here: [CONTRIBUTING](https://github.com/zehuamama/balancer/blob/main/CONTRIBUTING.md)
 
 ## License
 
