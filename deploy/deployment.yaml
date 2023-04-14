@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: balancer
+  namespace: default
+  labels:
+    app: balancer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: balancer
+  template:
+    metadata:
+      labels:
+        app: balancer
+    spec:
+      containers:
+        - name: balancer
+          image: balancer:v1.0.0
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: config
+              mountPath: /opt
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: balancer
