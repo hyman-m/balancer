@@ -4,10 +4,12 @@
 
 package balancer
 
+import "sync/atomic"
+
 //RoundRobin will select the server in turn from the server to proxy
 type RoundRobin struct {
 	BaseBalancer
-	i uint64
+	i atomic.Uint64
 }
 
 func init() {
@@ -17,7 +19,7 @@ func init() {
 // NewRoundRobin create new RoundRobin balancer
 func NewRoundRobin(hosts []string) Balancer {
 	return &RoundRobin{
-		i: 0,
+		i: atomic.Uint64{},
 		BaseBalancer: BaseBalancer{
 			hosts: hosts,
 		},
@@ -31,7 +33,6 @@ func (r *RoundRobin) Balance(_ string) (string, error) {
 	if len(r.hosts) == 0 {
 		return "", NoHostError
 	}
-	host := r.hosts[r.i%uint64(len(r.hosts))]
-	r.i++
+	host := r.hosts[r.i.Add(1)%uint64(len(r.hosts))]
 	return host, nil
 }

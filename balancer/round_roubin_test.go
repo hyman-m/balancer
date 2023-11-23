@@ -5,6 +5,7 @@
 package balancer
 
 import (
+	"sync/atomic"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -28,7 +29,7 @@ func TestRoundRobin_Add(t *testing.T) {
 					hosts: []string{"http://127.0.0.1:1011",
 						"http://127.0.0.1:1012", "http://127.0.0.1:1013"},
 				},
-				i: 0,
+				i: atomic.Uint64{},
 			},
 		},
 		{
@@ -41,7 +42,7 @@ func TestRoundRobin_Add(t *testing.T) {
 					hosts: []string{"http://127.0.0.1:1011",
 						"http://127.0.0.1:1012"},
 				},
-				i: 0,
+				i: atomic.Uint64{},
 			},
 		},
 	}
