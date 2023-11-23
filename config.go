@@ -7,7 +7,7 @@ package main
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"os"
 
 	"gopkg.in/yaml.v3"
 )
@@ -41,7 +41,7 @@ type Location struct {
 
 // ReadConfig read configuration from `fileName` file
 func ReadConfig(fileName string) (*Config, error) {
-	in, err := ioutil.ReadFile(fileName)
+	in, err := os.ReadFile(fileName)
 	if err != nil {
 		return nil, err
 	}
