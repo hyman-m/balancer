@@ -55,7 +55,10 @@ func NewHTTPProxy(targetHosts []string, algorithm string) (
 			req.Header.Set(XRealIP, GetIP(req))
 		}
 
-		host := GetHost(url)
+		host, err := GetHost(url)
+		if err != nil {
+			return nil, fmt.Errorf("get host error: %s", err)
+		}
 		alive[host] = true // initial mark alive
 		hostMap[host] = proxy
 		hosts = append(hosts, host)

@@ -34,16 +34,17 @@ func GetIP(r *http.Request) string {
 }
 
 // GetHost get the hostname, looks like IP:Port
-func GetHost(url *url.URL) string {
+func GetHost(url *url.URL) (string, error) {
 	if _, _, err := net.SplitHostPort(url.Host); err == nil {
-		return url.Host
+		return url.Host, nil
 	}
 	if url.Scheme == "http" {
-		return fmt.Sprintf("%s:%s", url.Host, "80")
+		return fmt.Sprintf("%s:%s", url.Host, "80"), nil
 	} else if url.Scheme == "https" {
-		return fmt.Sprintf("%s:%s", url.Host, "443")
+		return fmt.Sprintf("%s:%s", url.Host, "443"), nil
+	} else {
+		return "", fmt.Errorf("bad url %s, scheme is %s, neither http nor https", url, url.Scheme)
 	}
-	return url.Host
 }
 
 // IsBackendAlive Attempt to establish a tcp connection to determine whether the site is alive
