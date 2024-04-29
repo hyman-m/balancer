@@ -42,9 +42,8 @@ func GetHost(url *url.URL) (string, error) {
 		return fmt.Sprintf("%s:%s", url.Host, "80"), nil
 	} else if url.Scheme == "https" {
 		return fmt.Sprintf("%s:%s", url.Host, "443"), nil
-	} else {
-		return "", fmt.Errorf("bad url %s, scheme is %s, neither http nor https", url, url.Scheme)
 	}
+	return "", fmt.Errorf("bad url %s, scheme is %s, neither http nor https", url, url.Scheme)
 }
 
 // IsBackendAlive Attempt to establish a tcp connection to determine whether the site is alive

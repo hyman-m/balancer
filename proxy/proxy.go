@@ -59,6 +59,7 @@ func NewHTTPProxy(targetHosts []string, algorithm string) (
 		if err != nil {
 			return nil, fmt.Errorf("get host error: %s", err)
 		}
+		host = ""
 		alive[host] = true // initial mark alive
 		hostMap[host] = proxy
 		hosts = append(hosts, host)
