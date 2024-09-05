@@ -1,6 +1,6 @@
 # balancer
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/zehuamama/balancer)&nbsp;](https://goreportcard.com/report/github.com/zehuamama/balancer)![GitHub top language](https://img.shields.io/github/languages/top/zehuamama/balancer)&nbsp;![GitHub](https://img.shields.io/github/license/zehuamama/balancer)&nbsp;[![CodeFactor](https://www.codefactor.io/repository/github/zehuamama/balancer/badge)](https://www.codefactor.io/repository/github/zehuamama/balancer)&nbsp;[![codecov](https://codecov.io/gh/zehuamama/balancer/branch/main/graph/badge.svg)](https://codecov.io/gh/zehuamama/balancer)&nbsp; ![go_version](https://img.shields.io/badge/go%20version-1.17-yellow)
+[![Go Report Card](https://goreportcard.com/badge/github.com/wanzoma/balancer)](https://goreportcard.com/report/github.com/wanzoma/balancer)&nbsp;![GitHub top language](https://img.shields.io/github/languages/top/wanzoma/balancer)&nbsp;![GitHub](https://img.shields.io/github/license/wanzoma/balancer)&nbsp;[![CodeFactor](https://www.codefactor.io/repository/github/wanzoma/balancer/badge)](https://www.codefactor.io/repository/github/wanzoma/balancer)&nbsp;[![codecov](https://codecov.io/gh/wanzoma/balancer/branch/main/graph/badge.svg)](https://codecov.io/gh/wanzoma/balancer)&nbsp; ![go_version](https://img.shields.io/badge/go%20version-1.17-yellow)
 
 `balancer` is a layer 7 load balancer that supports http and https, and it is also a go library that implements `load balancing` algorithms.
 
@@ -16,7 +16,7 @@ It currently supports load balancing algorithms:
 ## Install
 First download the source code of balancer:
 ```shell
-> git clone https://github.com/zehuamama/balancer.git
+> git clone https://github.com/wanzoma/balancer.git
 ```
 compile the source code:
 ```shell
