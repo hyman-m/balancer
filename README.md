@@ -26,7 +26,7 @@ compile the source code:
 ```
 
 ## Run
-`mini-balancer` needs to configure the `config.yaml` file, see [config.yaml](https://github.com/zehuamama/mini-balancer/blob/main/config.yaml) :
+`mini-balancer` needs to configure the `config.yaml` file, see [config.yaml](https://github.com/wanzo-mini/mini-balancer/blob/main/config.yaml) :
 
 and now, you can execute `mini-balancer`, the mini-balancer will print the ascii diagram and configuration details:
 ```shell
@@ -50,7 +50,7 @@ Location:
 ## API Usage
 `mini-balancer` is also a go library that implements load balancing algorithms, it can be used alone as an API, you need to import it into your project first:
 ```shell
-> go get github.com/zehuamama/mini-balancer/mini-balancer
+> go get github.com/wanzo-mini/mini-balancer/mini-balancer
 ```
 
 Build the load mini-balancer with `mini-balancer.Build`:
@@ -108,8 +108,8 @@ const (
 
 ## Contributing
 
-If you are interested in contributing to mini-balancer, please see here: [CONTRIBUTING](https://github.com/zehuamama/mini-balancer/blob/main/CONTRIBUTING.md)
+If you are interested in contributing to mini-balancer, please see here: [CONTRIBUTING](https://github.com/wanzo-mini/mini-balancer/blob/main/CONTRIBUTING.md)
 
 ## License
 
-mini-balancer is licensed under the term of the [BSD 2-Clause License](https://github.com/zehuamama/mini-balancer/blob/main/LICENSE)
+mini-balancer is licensed under the term of the [BSD 2-Clause License](https://github.com/wanzo-mini/mini-balancer/blob/main/LICENSE)
