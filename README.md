@@ -1,8 +1,8 @@
-# balancer
+# mini-balancer
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/wanzoma/balancer)](https://goreportcard.com/report/github.com/wanzoma/balancer)&nbsp;![GitHub top language](https://img.shields.io/github/languages/top/wanzoma/balancer)&nbsp;![GitHub](https://img.shields.io/github/license/wanzoma/balancer)&nbsp;[![CodeFactor](https://www.codefactor.io/repository/github/wanzoma/balancer/badge)](https://www.codefactor.io/repository/github/wanzoma/balancer)&nbsp;[![codecov](https://codecov.io/gh/wanzoma/balancer/branch/main/graph/badge.svg)](https://codecov.io/gh/wanzoma/balancer)&nbsp; ![go_version](https://img.shields.io/badge/go%20version-1.17-yellow)
+[![Go Report Card](https://goreportcard.com/badge/github.com/wanzo-mini/mini-balancer)](https://goreportcard.com/report/github.com/wanzo-mini/mini-balancer)&nbsp;![GitHub top language](https://img.shields.io/github/languages/top/wanzo-mini/mini-balancer)&nbsp;![GitHub](https://img.shields.io/github/license/wanzo-mini/mini-balancer)&nbsp;[![CodeFactor](https://www.codefactor.io/repository/github/wanzo-mini/mini-balancer/badge)](https://www.codefactor.io/repository/github/wanzo-mini/mini-balancer)&nbsp;[![codecov](https://codecov.io/gh/wanzo-mini/mini-balancer/branch/main/graph/badge.svg)](https://codecov.io/gh/wanzo-mini/mini-balancer)&nbsp; ![go_version](https://img.shields.io/badge/go%20version-1.17-yellow)
 
-`balancer` is a layer 7 load balancer that supports http and https, and it is also a go library that implements `load balancing` algorithms.
+`mini-balancer` is a layer 7 load mini-balancer that supports http and https, and it is also a go library that implements `load balancing` algorithms.
 
 It currently supports load balancing algorithms: 
 * `round-robin`
@@ -14,23 +14,23 @@ It currently supports load balancing algorithms:
 * `least-load`
 
 ## Install
-First download the source code of balancer:
+First download the source code of mini-balancer:
 ```shell
-> git clone https://github.com/wanzoma/balancer.git
+> git clone https://github.com/wanzo-mini/mini-balancer.git
 ```
 compile the source code:
 ```shell
-> cd ./balancer
+> cd ./mini-balancer
 
 > go build
 ```
 
 ## Run
-`Balancer` needs to configure the `config.yaml` file, see [config.yaml](https://github.com/zehuamama/balancer/blob/main/config.yaml) :
+`mini-balancer` needs to configure the `config.yaml` file, see [config.yaml](https://github.com/zehuamama/mini-balancer/blob/main/config.yaml) :
 
-and now, you can execute `balancer`, the balancer will print the ascii diagram and configuration details:
+and now, you can execute `mini-balancer`, the mini-balancer will print the ascii diagram and configuration details:
 ```shell
-> ./balancer
+> ./mini-balancer
 
 ___ _ _  _ _   _ ___  ____ _    ____ _  _ ____ ____ ____ 
  |  | |\ |  \_/  |__] |__| |    |__| |\ | |    |___ |__/ 
@@ -45,15 +45,15 @@ Location:
         Mode: round-robin
 
 ```
-`balancer` will perform `health check` on all proxy sites periodically. When the site is unreachable, it will be removed from the balancer automatically . However, `balancer` will still perform `health check` on unreachable sites. When the site is reachable, it will add it to the balancer automatically.
+`mini-balancer` will perform `health check` on all proxy sites periodically. When the site is unreachable, it will be removed from the mini-balancer automatically . However, `mini-balancer` will still perform `health check` on unreachable sites. When the site is reachable, it will add it to the mini-balancer automatically.
 
 ## API Usage
-`balancer` is also a go library that implements load balancing algorithms, it can be used alone as an API, you need to import it into your project first:
+`mini-balancer` is also a go library that implements load balancing algorithms, it can be used alone as an API, you need to import it into your project first:
 ```shell
-> go get github.com/zehuamama/balancer/balancer
+> go get github.com/zehuamama/mini-balancer/mini-balancer
 ```
 
-Build the load balancer with `balancer.Build`:
+Build the load mini-balancer with `mini-balancer.Build`:
 ```go
 hosts := []string{
 	"http://192.168.11.101",
@@ -62,12 +62,12 @@ hosts := []string{
 	"http://192.168.11.104",
 }
 
-lb, err := balancer.Build(balancer.P2CBalancer, hosts)
+lb, err := mini-balancer.Build(mini-balancer.P2Cmini-balancer, hosts)
 if err != nil {
 	return err
 }
 ```
-and you can use balancer like this:
+and you can use mini-balancer like this:
 ```go
 
 clientAddr := "172.160.1.5"  // request IP
@@ -82,9 +82,9 @@ defer lb.Done(targetHost)
 
 // route to target host
 ```
-each load balancer implements the `balancer.Balancer` interface:
+each load mini-balancer implements the `mini-balancer.mini-balancer` interface:
 ```go
-type Balancer interface {
+type mini-balancer interface {
 	Add(string)
 	Remove(string)
 	Balance(string) (string, error)
@@ -95,21 +95,21 @@ type Balancer interface {
 currently supports the following load balancing algorithms:
 ```go
 const (
-	IPHashBalancer         = "ip-hash"
-	ConsistentHashBalancer = "consistent-hash"
-	P2CBalancer            = "p2c"
-	RandomBalancer         = "random"
-	R2Balancer             = "round-robin"
-	LeastLoadBalancer      = "least-load"
-	BoundedBalancer        = "bounded"
+	IPHashmini-balancer         = "ip-hash"
+	ConsistentHashmini-balancer = "consistent-hash"
+	P2Cmini-balancer            = "p2c"
+	Randommini-balancer         = "random"
+	R2mini-balancer             = "round-robin"
+	LeastLoadmini-balancer      = "least-load"
+	Boundedmini-balancer        = "bounded"
 )
 ```
 
 
 ## Contributing
 
-If you are interested in contributing to balancer, please see here: [CONTRIBUTING](https://github.com/zehuamama/balancer/blob/main/CONTRIBUTING.md)
+If you are interested in contributing to mini-balancer, please see here: [CONTRIBUTING](https://github.com/zehuamama/mini-balancer/blob/main/CONTRIBUTING.md)
 
 ## License
 
-balancer is licensed under the term of the [BSD 2-Clause License](https://github.com/zehuamama/balancer/blob/main/LICENSE)
+mini-balancer is licensed under the term of the [BSD 2-Clause License](https://github.com/zehuamama/mini-balancer/blob/main/LICENSE)
